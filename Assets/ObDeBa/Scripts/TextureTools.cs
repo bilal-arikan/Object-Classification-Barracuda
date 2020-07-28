@@ -28,6 +28,7 @@ namespace TFClassify
             Custom = 9
         }
 
+
         public static IEnumerator CropSquare(
             Texture2D texture, RectOptions rectOptions, System.Action<Texture2D> callback)
         {
@@ -95,7 +96,6 @@ namespace TFClassify
             yield return null;
             callback(result);
         }
-
         public static IEnumerator CropSquare(
             WebCamTexture texture, RectOptions rectOptions, System.Action<Texture2D> callback)
         {
@@ -226,6 +226,7 @@ namespace TFClassify
 
             return result;
         }
+
 
         /// <summary>
         ///     Returns a scaled copy of given texture.
