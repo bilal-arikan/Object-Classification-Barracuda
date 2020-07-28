@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +15,7 @@ public class UIController : MonoBehaviour
     public Button SearchButton;
     public Text SearchText;
     public LayoutGroup SearchResults;
+    public float ShowHigherThan = 5f;
 
     private float cameraScale = 1f;
 
@@ -46,6 +49,20 @@ public class UIController : MonoBehaviour
         if (orient != 0)
         {
             this.cameraScale = (float)Screen.width / Screen.height;
+        }
+    }
+
+    public void ShowResult(List<KeyValuePair<string, float>> results)
+    {
+        ResultsText.text = String.Empty;
+
+        var highers = results.Where(p => p.Value > ShowHigherThan);
+        if (highers.Any())
+        {
+            foreach (var result in highers)
+            {
+                ResultsText.text += String.Format("{0:0.000}%", result.Value) + "\t: " + result.Key + "\n";
+            }
         }
     }
 }

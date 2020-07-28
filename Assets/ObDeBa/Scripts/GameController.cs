@@ -59,15 +59,7 @@ public class GameController : MonoBehaviour
             var forModel = result; // texture;
             StartCoroutine(this.classifier.Classify(forModel, probabilities =>
             {
-                UIController.Instance.ResultsText.text = String.Empty;
-
-                if (probabilities.Any())
-                {
-                    for (int i = 0; i < probabilities.Count; i++)
-                    {
-                        UIController.Instance.ResultsText.text += String.Format("{0:0.000}%", probabilities[i].Value) + "\t: " + probabilities[i].Key + "\n";
-                    }
-                }
+                UIController.Instance.ShowResult(probabilities);
 
                 Resources.UnloadUnusedAssets();
                 this.isWorking = false;

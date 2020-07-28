@@ -479,11 +479,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 46
+    m_MaxSize: 50
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1116,6 +1116,7 @@ MonoBehaviour:
   SearchButton: {fileID: 58763796}
   SearchText: {fileID: 378342725}
   SearchResults: {fileID: 913201857}
+  ShowHigherThan: 1
 --- !u!1 &1375191582
 GameObject:
   m_ObjectHideFlags: 0
