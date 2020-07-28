@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour
                 {
                     for (int i = 0; i < probabilities.Count; i++)
                     {
-                        UIController.Instance.ResultsText.text += probabilities[i].Key + ": " + String.Format("{0:0.000}%", probabilities[i].Value) + "\n";
+                        UIController.Instance.ResultsText.text += String.Format("{0:0.000}%", probabilities[i].Value) + "\t: " + probabilities[i].Key + "\n";
                     }
                 }
 
