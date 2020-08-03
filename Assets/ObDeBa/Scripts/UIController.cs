@@ -13,11 +13,13 @@ public class UIController : MonoBehaviour
     public RawImage CameraScreen;
     public AspectRatioFitter CamFitter;
     public Button SearchButton;
-    public Text SearchText;
-    public LayoutGroup SearchResults;
+    public Text SearchingText;
     public float ShowHigherThan = 5f;
 
+    private float ratio;
     private float cameraScale = 1f;
+    private string lastDetectedLabel;
+    private bool firstUpdate = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,14 +31,18 @@ public class UIController : MonoBehaviour
         CameraScreen.texture = GameController.Instance.WebCamCamera;
         SearchButton.onClick.AddListener(() =>
         {
-
+            SearchingText.text = "Searching: " + lastDetectedLabel;
+            string url = $"https://www.google.com/search?q={lastDetectedLabel}&tbm=isch";
+            url = url.Replace(" ", "%20");
+            Debug.Log("Opening: " + url);
+            Application.OpenURL(url);
         });
     }
 
     private void Update()
     {
         var backCamera = GameController.Instance.WebCamCamera;
-        float ratio = (float)backCamera.width / (float)backCamera.height;
+        ratio = (float)backCamera.width / (float)backCamera.height;
         CamFitter.aspectRatio = ratio;
 
         float scaleX = cameraScale;
@@ -48,13 +54,22 @@ public class UIController : MonoBehaviour
 
         if (orient != 0)
         {
-            this.cameraScale = (float)Screen.width / Screen.height;
+            this.cameraScale = (float)Screen.height / Screen.width;
         }
+
+        if (firstUpdate)
+        {
+            Debug.Log("Ratio: " + ratio);
+            Debug.Log("Angle: " + CameraScreen.rectTransform.localEulerAngles);
+            Debug.Log("Scale: " + cameraScale);
+        }
+        firstUpdate = false;
     }
 
     public void ShowResult(List<KeyValuePair<string, float>> results)
     {
         ResultsText.text = String.Empty;
+        lastDetectedLabel = results.FirstOrDefault().Key;
 
         var highers = results.Where(p => p.Value > ShowHigherThan);
         if (highers.Any())

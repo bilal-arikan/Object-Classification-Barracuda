@@ -15,10 +15,16 @@ public class GameController : MonoBehaviour
     public Classifier classifier;
 
     private bool isWorking = false;
+    private Quaternion baseRotation;
 
     private void Awake()
     {
         Instance = this;
+        Debug.Log(string.Join("\n", WebCamTexture.devices.Select(d =>
+        {
+            return "> " + d.name + " " + d.kind + " " + string.Join(":", (d.availableResolutions ?? new Resolution[0]).Select(r => r.width + "_" + r.height + "_" + r.refreshRate)) + " " + d.depthCameraName;
+        })));
+
         this.WebCamCamera = new WebCamTexture();
         this.WebCamCamera.Play();
         camAvailable = true;
@@ -48,13 +54,13 @@ public class GameController : MonoBehaviour
         this.isWorking = true;
         StartCoroutine(ProcessImage(texture, classifier.IMAGE_SIZE, result =>
         {
-            if (texture is WebCamTexture)
-            {
-                var texture2D = new Texture2D(texture.width, texture.height);
-                texture2D.SetPixels32((texture as WebCamTexture).GetPixels32());
-                texture2D.Apply(false, false);
-                texture = texture2D;
-            }
+            // if (texture is WebCamTexture)
+            // {
+            //     var texture2D = new Texture2D(texture.width, texture.height);
+            //     texture2D.SetPixels32((texture as WebCamTexture).GetPixels32());
+            //     texture2D.Apply(false, false);
+            //     texture = texture2D;
+            // }
 
             var forModel = result; // texture;
             StartCoroutine(this.classifier.Classify(forModel, probabilities =>
