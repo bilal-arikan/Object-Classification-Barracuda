@@ -1,6 +1,6 @@
-# Object-Detection-Barracuda
+# Object-Classification-Barracuda
 
-Unity3D barracuda package example
+Unity3D barracuda image classification example
 
 Main Source: https://github.com/Syn-McJ/TFClassify-Unity
 
